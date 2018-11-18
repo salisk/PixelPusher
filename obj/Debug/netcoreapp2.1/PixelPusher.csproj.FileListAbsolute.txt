@@ -1,0 +1,11 @@
+/home/pi/PixelPusher/bin/Debug/netcoreapp2.1/PixelPusher.deps.json
+/home/pi/PixelPusher/bin/Debug/netcoreapp2.1/PixelPusher.runtimeconfig.json
+/home/pi/PixelPusher/bin/Debug/netcoreapp2.1/PixelPusher.runtimeconfig.dev.json
+/home/pi/PixelPusher/bin/Debug/netcoreapp2.1/PixelPusher.dll
+/home/pi/PixelPusher/bin/Debug/netcoreapp2.1/PixelPusher.pdb
+/home/pi/PixelPusher/obj/Debug/netcoreapp2.1/PixelPusher.csprojAssemblyReference.cache
+/home/pi/PixelPusher/obj/Debug/netcoreapp2.1/PixelPusher.csproj.CoreCompileInputs.cache
+/home/pi/PixelPusher/obj/Debug/netcoreapp2.1/PixelPusher.AssemblyInfoInputs.cache
+/home/pi/PixelPusher/obj/Debug/netcoreapp2.1/PixelPusher.AssemblyInfo.cs
+/home/pi/PixelPusher/obj/Debug/netcoreapp2.1/PixelPusher.dll
+/home/pi/PixelPusher/obj/Debug/netcoreapp2.1/PixelPusher.pdb
