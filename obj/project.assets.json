@@ -775,7 +775,7 @@
     ]
   },
   "packageFolders": {
-    "/home/pi/.nuget/packages/": {},
+    "/root/.nuget/packages/": {},
     "/opt/dotnet/sdk/NuGetFallbackFolder": {}
   },
   "project": {
@@ -784,14 +784,14 @@
       "projectUniqueName": "/home/pi/PixelPusher/PixelPusher.csproj",
       "projectName": "PixelPusher",
       "projectPath": "/home/pi/PixelPusher/PixelPusher.csproj",
-      "packagesPath": "/home/pi/.nuget/packages/",
+      "packagesPath": "/root/.nuget/packages/",
       "outputPath": "/home/pi/PixelPusher/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/opt/dotnet/sdk/NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "/home/pi/.nuget/NuGet/NuGet.Config"
+        "/root/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.1"
