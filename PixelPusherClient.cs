@@ -21,9 +21,16 @@ namespace rpi_rgb_led_matrix_sharp
 
         private static void StartListener()
         {
+            // Initialize Udp client
             UdpClient client = new UdpClient(listenPort);
             IPEndPoint localEP = new IPEndPoint(IPAddress.Any, listenPort);
-
+            System.Drawing.Color px;
+            
+            // Initialize the matrix
+            RGBLedMatrix matrix = new RGBLedMatrix(32, 1, 1);
+            var canvas = matrix.CreateOffscreenCanvas();
+            Color color;
+            
             try
             {
                 while (true)
@@ -32,7 +39,6 @@ namespace rpi_rgb_led_matrix_sharp
                     byte[] bytes = client.Receive(ref localEP);
                 
                     Console.WriteLine($"Received broadcast from {localEP} :");
-                    Console.WriteLine($" {Encoding.ASCII.GetString(bytes, 0, bytes.Length)}");
 
                     Bitmap bmp;
                     using (var ms = new MemoryStream(bytes))
@@ -40,6 +46,24 @@ namespace rpi_rgb_led_matrix_sharp
                         bmp = new Bitmap(ms);
                     }
                     Console.WriteLine($"{bmp.Height}, {bmp.Width}");
+                    
+                    for (int i = 0; i < bmp.Height; i++)
+                    {
+                        for (int j = 0; j < bmp.Width; j++)
+                        {
+                            // Get bmp pixel
+                            px = bmp.GetPixel(j, i);
+                            
+                            // Convert to matrix color
+                            color = new Color(px.R, px.G, px.B);
+                            
+                            // Set pixel to canvas
+                            canvas.SetPixel(j, i, color); 
+                        }
+                    }
+                    
+                    // Swap on vsync
+                    canvas = matrix.SwapOnVsync(canvas);
                 }
             } 
             catch (SocketException e)
