@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using NLog;
 
 namespace rpi_rgb_led_matrix_sharp
 {
@@ -13,6 +14,9 @@ namespace rpi_rgb_led_matrix_sharp
     {
 
         private const int listenPort = 11000;
+        private const int matrixSize = 32;
+
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         
         static void Main()
         {
@@ -22,30 +26,34 @@ namespace rpi_rgb_led_matrix_sharp
         private static void StartListener()
         {
             // Initialize Udp client
+            logger.Info($"Starting udp client on port: {listenPort}");
             UdpClient client = new UdpClient(listenPort);
             IPEndPoint localEP = new IPEndPoint(IPAddress.Any, listenPort);
-            System.Drawing.Color px;
             
             // Initialize the matrix
-            RGBLedMatrix matrix = new RGBLedMatrix(32, 1, 1);
+            logger.Info($"Creating {matrixSize}x{matrixSize} matrix");
+            RGBLedMatrix matrix = new RGBLedMatrix(matrixSize, 1, 1);
             var canvas = matrix.CreateOffscreenCanvas();
+            
+            // Picture variables
+            Bitmap bmp;
             Color color;
+            System.Drawing.Color px;
             
             try
             {
                 while (true)
                 {
-                    Console.WriteLine("Waiting for broadcast");
+                    logger.Trace("Waiting for broadcast");
                     byte[] bytes = client.Receive(ref localEP);
                 
-                    Console.WriteLine($"Received broadcast from {localEP} :");
+                    logger.Trace($"Received broadcast from {localEP} :");
 
-                    Bitmap bmp;
                     using (var ms = new MemoryStream(bytes))
                     {
                         bmp = new Bitmap(ms);
                     }
-                    Console.WriteLine($"{bmp.Height}, {bmp.Width}");
+                    logger.Trace($"{bmp.Height}, {bmp.Width}");
                     
                     for (int i = 0; i < bmp.Height; i++)
                     {
@@ -68,11 +76,12 @@ namespace rpi_rgb_led_matrix_sharp
             } 
             catch (SocketException e)
             {
-                Console.WriteLine(e);
+                logger.Fatal(e, "application encountered an error!");
             }
             finally
             {
                 client.Close();
+                LogManager.Shutdown();
             }
         }
     }
